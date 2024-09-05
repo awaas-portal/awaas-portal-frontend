@@ -1,0 +1,137 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: "Mangal";
+  src: url("../fonts/MANGAL.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.dynamic-delete-button {
+  position: relative;
+  top: 4px;
+  margin: 0 8px;
+  color: #999;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mangal {
+  font-family: "Mangal" !important;
+}
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: flex;
+}
+
+.root {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.row {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+/* Hide PDF controls */
+iframe::-webkit-pdf-controls {
+  display: none !important;
+}
+
+.pdf-container {
+  position: relative;
+  width: 100%;
+}
+
+.pdf-link {
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.pdf-iframe {
+  border: none;
+  overflow: hidden;
+}
+
+.ant-list-item-extra {
+  width: 40%;
+}
+
+.pdf-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Align items at the bottom */
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #d6d6d6;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pdf-overlay:hover {
+  opacity: 1;
+}
+
+.pdf-icon {
+  font-size: 48px;
+}
+
+.pdf-text {
+  margin-top: 4px; /* Adjust as needed */
+}
+
+@media screen and (max-width: 767px) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .flex {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .flex-normal {
+    flex-direction: column;
+    align-items: center;
+  }
+  .flex #status {
+    width: 95% !important;
+  }
+  .flex #notices {
+    padding-top: 50px;
+  }
+  #notices .ant-list-item {
+    flex-direction: column-reverse;
+  }
+  #notices .ant-list-item-extra {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .ant-list-item-extra {
+    width: 70%;
+  }
+}
