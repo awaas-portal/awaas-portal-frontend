@@ -93,21 +93,6 @@ const ArchivedRecords = ({ records, fetchRecords, loading }) => {
   };
 
   const columns = [
-    auth.role === "admin" && {
-      field: "checkbox",
-      headerName: "",
-      renderCell: (params) => (
-        <Checkbox
-          onChange={(e) =>
-            selected.find((id) => id === params.row.id)
-              ? setSelected(selected.filter((id) => id !== params.row.id))
-              : setSelected([...selected, params.row.id])
-          }
-        />
-      ),
-      width: 6,
-      disableExport: true,
-    },
     {
       field: "registrationNumber",
       headerName: t["Registration No"],
@@ -221,34 +206,6 @@ const ArchivedRecords = ({ records, fetchRecords, loading }) => {
             </Button>
           </Popconfirm>
         )}
-        {auth.role === "admin" && (
-          <Popconfirm
-            placement="topLeft"
-            title={t["Delete List"]}
-            okText={t["Yes"]}
-            cancelText={t["No"]}
-            onConfirm={() => clear("all")}
-          >
-            <Button
-              variant="outlined"
-              color="warning"
-              disabled={!!processing || !records?.length}
-              startIcon={
-                processing === "all" ? (
-                  <Spin
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                ) : (
-                  <DeleteIcon fontSize="inherit" />
-                )
-              }
-            >
-              {t["Clear List"]}
-            </Button>
-          </Popconfirm>
-        )}
       </div>
 
       <DataGrid
@@ -262,6 +219,12 @@ const ArchivedRecords = ({ records, fetchRecords, loading }) => {
         getRowClassName={() => "row"}
         slots={{ toolbar: GridToolbar }}
         loading={loading}
+        checkboxSelection={auth.role === "admin"}
+        rowSelectionModel={selected}
+        onRowSelectionModelChange={(newSelectionModel) =>
+          setSelected(newSelectionModel)
+        }
+        disableRowSelectionOnClick
       />
     </div>
   );

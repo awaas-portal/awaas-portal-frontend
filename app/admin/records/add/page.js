@@ -124,20 +124,17 @@ const AddRecords = () => {
             };
           });
 
-        console.log(jsonData);
-
         if (jsonData.length === 0) {
           ErrorMessage(t["No Records Found"]);
           setProcessing(false);
           return;
         }
-        if (!jsonData.every((record) => record.rank)) {
+        if (jsonData.some((record) => !record.rank)) {
           ErrorMessage(t["Invalid Rank"]);
           setProcessing(false);
           return;
         }
 
-        // setProcessing(false);
         addRecords(jsonData);
       };
 
@@ -147,7 +144,6 @@ const AddRecords = () => {
       setProcessing(true);
 
       jsonData = data.records.map((record) => {
-        console.log(record);
         const date = new Date(record.applicationDate["$d"]).getDate();
         const month = new Date(record.applicationDate["$d"]).getMonth() + 1;
         const year = new Date(record.applicationDate["$d"]).getFullYear();

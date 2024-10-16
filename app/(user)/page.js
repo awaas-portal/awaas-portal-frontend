@@ -53,7 +53,6 @@ export default function Home() {
       .then((data) => {
         if (data.status) {
           setApplication(data.message);
-          console.log(application);
           SuccessMessage(t["Application Loaded"]);
         } else {
           setApplication(null);
@@ -157,9 +156,6 @@ export default function Home() {
               itemLayout="vertical"
               size="small"
               pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
                 pageSize: 5,
               }}
               dataSource={notices.sort(

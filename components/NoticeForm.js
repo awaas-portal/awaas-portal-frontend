@@ -21,7 +21,6 @@ export default function NoticeForm({
   const addNotice = (values) => {
     setProcessing(true);
 
-    console.log(values);
     const formData = new FormData();
     formData.append("file", values.file.file);
     formData.append(

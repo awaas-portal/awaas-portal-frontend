@@ -125,21 +125,6 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
 
   const columns = [
     {
-      field: "checkbox",
-      headerName: "",
-      renderCell: (params) => (
-        <Checkbox
-          onChange={(e) =>
-            selected.find((id) => id === params.row.id)
-              ? setSelected(selected.filter((id) => id !== params.row.id))
-              : setSelected([...selected, params.row.id])
-          }
-        />
-      ),
-      width: 6,
-      disableExport: true,
-    },
-    {
       field: "registrationNumber",
       headerName: t["Registration No"],
       flex: 1,
@@ -211,7 +196,6 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
               color="primary"
               startIcon={<EditIcon fontSize="inherit" />}
               onClick={() => {
-                console.log(params.row);
                 setRecord(params.row);
                 setOpen(true);
               }}
@@ -332,34 +316,6 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
             </Button>
           </Popconfirm>
         )}
-        {auth.role === "admin" && (
-          <Popconfirm
-            placement="topLeft"
-            title={t["Delete List"]}
-            okText={t["Yes"]}
-            cancelText={t["No"]}
-            onConfirm={() => clear("all")}
-          >
-            <Button
-              variant="outlined"
-              color="warning"
-              disabled={!!processing || !records?.length}
-              startIcon={
-                processing === "all" ? (
-                  <Spin
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                ) : (
-                  <DeleteIcon fontSize="inherit" />
-                )
-              }
-            >
-              {t["Clear List"]}
-            </Button>
-          </Popconfirm>
-        )}
       </div>
 
       <DataGrid
@@ -370,18 +326,15 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
         showCellVerticalBorder
         pageSize={10}
         autoHeight
-        rowHeight={100}
         getRowClassName={() => "row"}
         slots={{ toolbar: GridToolbar }}
-        rowSelection={false}
         loading={loading}
-        onRowClick={(params) =>
-          selected.find((id) => id === params.row.id)
-            ? setSelected(selected.filter((id) => id !== params.row.id))
-            : setSelected([...selected, params.row.id])
+        rowHeight={100}
+        checkboxSelection
+        rowSelectionModel={selected}
+        onRowSelectionModelChange={(newSelectionModel) =>
+          setSelected(newSelectionModel)
         }
-        disableColumnSelector
-        disableColumnFilter
         disableRowSelectionOnClick
       />
     </div>

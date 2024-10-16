@@ -7,7 +7,6 @@ export const auth = getAuth(app);
 export const logIn = async (email, password) => {
   try {
     const creds = await signInWithEmailAndPassword(auth, email, password);
-    console.log(creds);
     const lastSignIn = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/log`,
       {

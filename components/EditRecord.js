@@ -15,7 +15,6 @@ export default function EditRecord({ record, open, setOpen, fetchRecords }) {
 
   const editRecord = (values) => {
     setProcessing(true);
-    console.log(values);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/application/update`, {
       method: "POST",
       credentials: "include",
