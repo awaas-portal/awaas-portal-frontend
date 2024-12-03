@@ -29,42 +29,50 @@ const AddRecords = () => {
   );
   const router = useRouter();
 
-  const addRecords = (jsonData) =>
-    fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/application/active/create/many`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-        body: JSON.stringify({ applications: jsonData }),
-      }
-    )
-      .then((res) => checkAuth(res, setAuth))
-      .then((data) => {
-        if (data.status) {
-          SuccessMessage(t["Records Added"]);
-          form.current.resetFields();
-          router.push("/admin/records");
-        } else {
+  const addRecords = async (jsonData) => {
+    try {
+      let error = false;
+      for (let i = 0; i < jsonData.length; i += 100) {
+        const data = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/application/active/create/many`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth?.token}`,
+            },
+            body: JSON.stringify({ applications: jsonData.slice(i, i + 100) }),
+          }
+        ).then((res) => checkAuth(res, setAuth));
+
+        if (!data.status) {
+          error = true;
           console.error(data.message);
           ErrorMessage(t["Error Adding Records"]);
+          return;
         }
-      })
-      .catch((err) => {
-        console.error(err);
-        ErrorMessage(t["Error Adding Records"]);
-      })
-      .finally(() => setProcessing(false));
+      }
+
+      if (!error) {
+        SuccessMessage(t["Records Added"]);
+        form.current.resetFields();
+        router.push("/admin/records");
+      }
+    } catch (err) {
+      console.error(err);
+      ErrorMessage(t["Error Adding Records"]);
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   const handleAddRecords = (data) => {
     let jsonData;
     if (data.method === "sheet") {
       const reader = new FileReader();
 
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const workbook = XLSX.read(e.target.result, {
           type: "array",
         });
@@ -131,6 +139,34 @@ const AddRecords = () => {
         }
         if (jsonData.some((record) => !record.rank)) {
           ErrorMessage(t["Invalid Rank"]);
+          setProcessing(false);
+          return;
+        }
+        const data = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/application/active/all`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${auth?.token}`,
+            },
+          }
+        ).then((res) => res.json());
+
+        const duplicates = data.message
+          ? jsonData.filter((record) =>
+              data.message
+                .map((doc) => doc.registrationNumber)
+                .includes(record.registrationNumber)
+            )
+          : [];
+
+        if (duplicates.length) {
+          ErrorMessage(
+            `${t["Duplicates Found"]}: ${duplicates
+              .map((doc) => doc.registrationNumber)
+              .join(", ")}`
+          );
           setProcessing(false);
           return;
         }

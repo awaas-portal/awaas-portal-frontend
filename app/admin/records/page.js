@@ -116,27 +116,27 @@ const Records = () => {
           },
           {
             key: "a1",
-            label: `${t["Alloted List"]} 1`,
+            label: `${t["Alloted List"]} 1 - ${t["p1"]}`,
             children: (
               <ArchivedRecords
                 records={archivedRecords.filter(
                   (record) => record.rank === "rank1"
                 )}
-                fetchRecords={fetchPendingRecords}
-                loading={pendingLoading}
+                fetchRecords={fetchArchivedRecords}
+                loading={archivedLoading}
               />
             ),
           },
           {
             key: "a2",
-            label: `${t["Alloted List"]} 2`,
+            label: `${t["Alloted List"]} 2 - ${t["p2"]}`,
             children: (
               <ArchivedRecords
                 records={archivedRecords.filter(
                   (record) => record.rank === "rank2"
                 )}
-                fetchRecords={fetchPendingRecords}
-                loading={pendingLoading}
+                fetchRecords={fetchArchivedRecords}
+                loading={archivedLoading}
               />
             ),
           },

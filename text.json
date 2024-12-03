@@ -98,8 +98,9 @@
     "Invalid Rank": "Please select a valid rank",
     "No Records Found": "No records found",
     "View Notice": "View Notice",
-    "p1": "Insp/SI",
-    "p2": "HC/Const/Misc"
+    "p1": "Inspector/SI",
+    "p2": "HC/Constable/Misc",
+    "Duplicates Found": "Duplicates found with registration Nos"
   },
   "hi": {
     "Awas Portal": "आवास पोर्टल",
@@ -198,7 +199,8 @@
     "Invalid Rank": "कृपया एक वैध रैंक चुनें",
     "No Records Found": "कोई रिकॉर्ड नहीं मिला",
     "View Notice": "सूचना देखें",
-    "p1": "इंस्पेक्टर/सब इंस्पेक्टर",
-    "p2": "हेड कांस्टेबल/कांस्टेबल/विविध"
+    "p1": "निरीक्षक/उपनिरीक्षक",
+    "p2": "मुख्य आरक्षी/आरक्षी/विविध",
+    "Duplicates Found": "पंजीकरण नंबरों के साथ डुप्लिकेट पाए गए"
   }
 }
