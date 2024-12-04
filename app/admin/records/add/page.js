@@ -31,6 +31,45 @@ const AddRecords = () => {
 
   const addRecords = async (jsonData) => {
     try {
+      if (jsonData.length === 0) {
+        ErrorMessage(t["No Records Found"]);
+        setProcessing(false);
+        return;
+      }
+      if (!jsonData.every((record) => record.rank)) {
+        ErrorMessage(t["Invalid Rank"]);
+        setProcessing(false);
+        return;
+      }
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/application/active/all`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${auth?.token}`,
+          },
+        }
+      ).then((res) => res.json());
+
+      const duplicates = data.message
+        ? jsonData.filter((record) =>
+            data.message
+              .map((doc) => doc.registrationNumber)
+              .includes(record.registrationNumber)
+          )
+        : [];
+
+      if (duplicates.length) {
+        ErrorMessage(
+          `${t["Duplicates Found"]}: ${duplicates
+            .map((doc) => doc.registrationNumber)
+            .join(", ")}`
+        );
+        setProcessing(false);
+        return;
+      }
+
       let error = false;
       for (let i = 0; i < jsonData.length; i += 100) {
         const data = await fetch(
@@ -132,45 +171,6 @@ const AddRecords = () => {
             };
           });
 
-        if (jsonData.length === 0) {
-          ErrorMessage(t["No Records Found"]);
-          setProcessing(false);
-          return;
-        }
-        if (jsonData.some((record) => !record.rank)) {
-          ErrorMessage(t["Invalid Rank"]);
-          setProcessing(false);
-          return;
-        }
-        const data = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/application/active/all`,
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${auth?.token}`,
-            },
-          }
-        ).then((res) => res.json());
-
-        const duplicates = data.message
-          ? jsonData.filter((record) =>
-              data.message
-                .map((doc) => doc.registrationNumber)
-                .includes(record.registrationNumber)
-            )
-          : [];
-
-        if (duplicates.length) {
-          ErrorMessage(
-            `${t["Duplicates Found"]}: ${duplicates
-              .map((doc) => doc.registrationNumber)
-              .join(", ")}`
-          );
-          setProcessing(false);
-          return;
-        }
-
         addRecords(jsonData);
       };
 
@@ -191,17 +191,6 @@ const AddRecords = () => {
           applicationDate: `${date}/${month}/${year}`,
         };
       });
-
-      if (jsonData.length === 0) {
-        ErrorMessage(t["No Records Found"]);
-        setProcessing(false);
-        return;
-      }
-      if (!jsonData.every((record) => record.rank)) {
-        ErrorMessage(t["Invalid Rank"]);
-        setProcessing(false);
-        return;
-      }
 
       addRecords(jsonData);
     }
