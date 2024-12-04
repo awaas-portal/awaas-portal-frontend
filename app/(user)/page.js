@@ -31,7 +31,7 @@ export default function Home() {
   const contacts = [
     {
       department: "Awas Cell",
-      contact: "Police Lines, Kanpur Nagar commissionerate",
+      contact: "Police Lines, Kanpur Nagar Commissionerate",
     },
     { department: "ACP Lines", contact: "Email: lineacp89@gmail.com" },
     {

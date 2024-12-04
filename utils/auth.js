@@ -46,7 +46,7 @@ export const checkAuth = (res, setAuth) => {
     logOut().then(() => {
       setAuth(null);
       localStorage.removeItem("auth");
-      router.push("/admin");
+      window.location.href = "/admin";
     });
   }
   return res.json();

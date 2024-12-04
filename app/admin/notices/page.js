@@ -8,7 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Popconfirm, Space, Spin } from "antd";
 import NoticeForm from "@/components/NoticeForm";
 import { authState, langState } from "@/utils/atom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import text from "@/text.json";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ErrorMessage, SuccessMessage } from "@/components/Notification";
@@ -21,7 +21,7 @@ const Notices = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [notice, setNotice] = useState();
   const t = text[useRecoilValue(langState)];
-  const [auth, setAuth] = useState(authState);
+  const [auth, setAuth] = useRecoilState(authState);
   const [processing, setProcessing] = useState(false);
   const [loading, setLoading] = useState(false);
 

@@ -17,13 +17,6 @@ export const waitingLists = {
   rank2: ["constable", "hc", "various"],
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const Records = () => {
   const t = text[useRecoilValue(langState)];
   const [auth, setAuth] = useRecoilState(authState);
