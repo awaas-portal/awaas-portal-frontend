@@ -171,7 +171,7 @@ const ArchivedRecords = ({ records, fetchRecords, loading }) => {
     <div className="root">
       <div style={{ display: "flex", marginBottom: "5px", width: "100%" }}>
         <Input
-          placeholder={t["Enter PNO"]}
+          placeholder={t["Search"]}
           value={id}
           onChange={(e) => setId(e.target.value)}
           type="text"
@@ -209,7 +209,12 @@ const ArchivedRecords = ({ records, fetchRecords, loading }) => {
       </div>
 
       <DataGrid
-        rows={records?.filter((a) => String(a.pno).includes(id))}
+        rows={records?.filter(
+          (a) =>
+            String(a.pno).includes(id) ||
+            String(a.registrationNumber).includes(id) ||
+            String(a.name).includes(id)
+        )}
         columns={columns}
         getRowId={(row) => row.id}
         showColumnVerticalBorder

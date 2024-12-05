@@ -100,7 +100,8 @@
     "View Notice": "View Notice",
     "p1": "Inspector/SI",
     "p2": "HC/Constable/Misc",
-    "Duplicates Found": "Duplicates found with registration Nos"
+    "Duplicates Found": "Duplicates found with registration Nos",
+    "Search": "PNO or Registration Number or Name"
   },
   "hi": {
     "Awas Portal": "आवास पोर्टल",
@@ -201,6 +202,7 @@
     "View Notice": "सूचना देखें",
     "p1": "निरीक्षक/उपनिरीक्षक",
     "p2": "मुख्य आरक्षी/आरक्षी/विविध",
-    "Duplicates Found": "पंजीकरण नंबरों के साथ डुप्लिकेट पाए गए"
+    "Duplicates Found": "पंजीकरण नंबरों के साथ डुप्लिकेट पाए गए",
+    "Search": "पीएनओ या पंजीकरण संख्या या नाम"
   }
 }

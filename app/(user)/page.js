@@ -172,6 +172,7 @@ export default function Home() {
                           title="PDF Preview"
                           width="100%"
                           className="pdf-iframe"
+                          allowfullscreen
                         ></iframe>
                       </div>
                       <a

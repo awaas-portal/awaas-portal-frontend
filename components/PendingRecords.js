@@ -256,7 +256,7 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
         }}
       >
         <Input
-          placeholder={t["Enter PNO"]}
+          placeholder={t["Search"]}
           value={id}
           onChange={(e) => setId(e.target.value)}
           style={{ flex: 1, marginRight: "10px" }}
@@ -319,7 +319,12 @@ const PendingRecords = ({ records, fetchRecords, loading }) => {
       </div>
 
       <DataGrid
-        rows={records?.filter((a) => String(a.pno).includes(id))}
+        rows={records?.filter(
+          (a) =>
+            String(a.pno).includes(id) ||
+            String(a.name).includes(id) ||
+            String(a.registrationNumber).includes(id)
+        )}
         columns={columns}
         getRowId={(row) => row.id}
         showColumnVerticalBorder

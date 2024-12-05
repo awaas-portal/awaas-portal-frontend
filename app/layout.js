@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={inter.className}>
         <Notification />
         <RecoilRoot>{children}</RecoilRoot>
